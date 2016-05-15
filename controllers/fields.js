@@ -2,13 +2,17 @@
  * Created by Uros Zivaljevic on 5/15/16.
  */
 
+var models = require('../models');
+
 var routes = {
     fields: "/fields",
     field: "/fields/:id"
 }
 
 function getFields(req, res, next){
-    res.send("welcome to fields page");
+    models.field.findAll({}).then(function(fields){
+        res.json(fields);
+    });
 }
 
 module.exports.init = function(router) {

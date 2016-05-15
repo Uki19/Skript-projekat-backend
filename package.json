@@ -1,0 +1,14 @@
+{
+  "name": "projekat-backend",
+  "version": "1.0.0",
+  "description": "Project for Script Languages subject",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Uros Zivaljevic",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

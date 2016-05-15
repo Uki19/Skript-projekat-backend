@@ -2,8 +2,8 @@
  * Created by Uros Zivaljevic on 5/15/16.
  */
 var routes = {
-    fields: "/players",
-    field: "/players/:id"
+    players: "/players",
+    player: "/players/:id"
 }
 
 function getPlayers(req, res, next){

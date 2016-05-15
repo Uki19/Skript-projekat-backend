@@ -2,19 +2,22 @@
  * Created by Uros Zivaljevic on 5/15/16.
  */
 var express = require('express');
-
-//init controllers
 var controllers = require('./controllers/index');
 
-var app = express();
 var PORT = 3000;
-var HOST = "localhost";
+// var HOST = "localhost";
+var API_DIR = "/api";
 
+var app = express();
+
+//Routers
 var router = express.Router();
-app.use('/api/v1/', router);
+app.use(API_DIR, router);
+
+//Controllers
 controllers.init(router);
 
-app.listen(PORT, function (err) {
-    if(err) throw  err;
+//Start server
+app.listen(PORT, function () {
     console.log("server is listening on port: " + PORT);
 });

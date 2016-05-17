@@ -1,15 +1,22 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var field = sequelize.define('field', {
+  var Field = sequelize.define('Field', {
     name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    price: DataTypes.INTEGER
+    description: DataTypes.TEXT,
+    price: DataTypes.INTEGER,
+    street: DataTypes.STRING,
+    city: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    email: DataTypes.STRING,
+    website: DataTypes.STRING,
+    workingFrom: DataTypes.TIME,
+    workingTo: DataTypes.TIME
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        Field.hasMany(models.Reservation, {as: 'reservations'});
       }
     }
   });
-  return field;
+  return Field;
 };

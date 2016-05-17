@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var controllers = require('./controllers/index');
+var models = require("./models");
 
 var PORT = 3000;
 // var HOST = "localhost";
@@ -18,6 +19,9 @@ app.use(API_DIR, router);
 controllers.init(router);
 
 //Start server
-app.listen(PORT, function () {
-    console.log("server is listening on port: " + PORT);
+models.sequelize.sync().then(function () {
+    app.listen(PORT, function () {
+        console.log("server is listening on port: " + PORT);
+    });
 });
+

@@ -9,8 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     phone: DataTypes.STRING,
     email: DataTypes.STRING,
     website: DataTypes.STRING,
-    workingFrom: DataTypes.TIME,
-    workingTo: DataTypes.TIME
+    workingFrom: DataTypes.STRING,
+    workingTo: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

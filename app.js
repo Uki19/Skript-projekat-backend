@@ -23,7 +23,7 @@ app.use(API_DIR, router);
 controllers.init(router);
 
 //Start server
-models.sequelize.sync().then(function () {
+models.sequelize.sync({force:true}).then(function () {
     app.listen(PORT, function () {
         console.log("server is listening on port: " + PORT);
     });

@@ -1,10 +1,15 @@
 /**
  * Created by Uros Zivaljevic on 5/15/16.
  */
-var fields = require('./fields');
-var players = require('./players');
+
+var doctors = require('./doctors');
+var reviews = require('./reviews');
+var users = require('./users');
+var ordinations = require('./ordinations');
 
 module.exports.init = function(router) {
-    fields.init(router);
-    players.init(router);
+    doctors.init(router);
+    reviews.init(router);
+    users.init(router);
+    ordinations.init(router);
 }

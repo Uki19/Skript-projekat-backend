@@ -4,9 +4,9 @@
 'use strict';
 module.exports = function(sequelize, DataTypes){
     var Category = sequelize.define('Category',{
-        name: DataTypes.STRING,
-        description: DataTypes.TEXT
+        name: DataTypes.STRING
     },{
+        timestamps: false,
         classMethods: {
             associate: function(models){
                 Category.belongsToMany(models.Doctor, {through: 'DoctorCategory', foreignKey:'categoryId'});

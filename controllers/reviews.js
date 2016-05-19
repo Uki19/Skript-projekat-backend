@@ -9,7 +9,7 @@ var routes = {
 }
 
 function getReviews(req, res, next) {
-    models.Review.find()
+    models.Review.findAll()
         .then(function (reviews) {
             res.json(reviews);
         });

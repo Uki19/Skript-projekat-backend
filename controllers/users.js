@@ -12,7 +12,7 @@ var routes = {
 }
 
 function postUser(req, res, next) {
-    models.find({
+    models.findAll({
             where: {
                 email: req.body.email
             }

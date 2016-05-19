@@ -8,7 +8,7 @@ var routes = {
 }
 
 function getOrdinations(req, res, next) {
-    models.Ordination.find()
+    models.Ordination.findAll()
         .then(function (ordinations) {
             res.json(ordinations);
         });

@@ -9,9 +9,15 @@ var bodyParser = require("body-parser");
 var PORT = 3000;
 // var HOST = "localhost";
 var API_DIR = "/api";
+var FORCE_DB_SYNC = false;
 
 var app = express();
-
+app.get('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+app.use('/', express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -23,7 +29,7 @@ app.use(API_DIR, router);
 controllers.init(router);
 
 //Start server
-models.sequelize.sync({force:true}).then(function () {
+models.sequelize.sync({force:FORCE_DB_SYNC}).then(function () {
     app.listen(PORT, function () {
         console.log("server is listening on port: " + PORT);
     });

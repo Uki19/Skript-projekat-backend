@@ -32,7 +32,8 @@ function getDoctor(req, res, next) {
 function postDoctor(req, res, next) {
     models.Doctor.create({
             name: req.body.name,
-            description: req.body.description
+            description: req.body.description,
+            ordinationId: req.body.ordinationId
         })
         .then(function (doctor) {
             res.json(doctor);

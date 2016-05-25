@@ -2,9 +2,11 @@
  * Created by Uros Zivaljevic on 5/18/16.
  */
 
+var models = require('../models/');
+
 var routes = {
     ordinations: '/ordinations',
-    ordination: '/ordination'
+    ordination: '/ordination/:id'
 }
 
 function getOrdinations(req, res, next) {

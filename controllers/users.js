@@ -7,20 +7,21 @@
 var models = require('../models');
 
 var routes = {
-    users: '/reviews',
-    user: '/reviews/:id'
+    users: '/users',
+    user: '/user/:id',
+    usersRegister: '/users/register',
+    usersLogin: '/users/login'
 }
 
-function postUser(req, res, next) {
-    models.findAll({
+function registerUser(req, res, next) {
+    models.User.findOne({
             where: {
                 email: req.body.email
             }
         })
         .then(function (user) {
             if (user) {
-                res.error("exists");
-                return;
+                res.status(500).send("exists");
             } else {
                 models.User.create({
                         firstname: req.body.firstname,
@@ -36,6 +37,24 @@ function postUser(req, res, next) {
         })
 }
 
+// login user
+function loginUser(req, res, next) {
+    models.User.findOne({
+        where: {
+            email: req.body.email,
+            password: req.body.password
+        }
+    })
+        .then(function (user) {
+            if(!user){
+                res.status(500).send("this user doesn't exist");
+            } else {
+                res.json(user);
+            }
+        })
+}
+
 module.exports.init = function (router) {
-    router.post(routes.users, postUser);
+    router.post(routes.usersRegister, registerUser);
+    router.post(routes.usersLogin, loginUser);
 }

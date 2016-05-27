@@ -4,10 +4,7 @@
     "password": "b6yR97eI0nrO8CBI360wVE1w8n",
     "database": "dce69t6ab76e04",
     "host": "ec2-54-243-200-159.compute-1.amazonaws.com",
-    "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": true
-    }
+    "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
@@ -21,7 +18,10 @@
     "password": "b6yR97eI0nrO8CBI360wVE1w8n",
     "database": "dce69t6ab76e04",
     "host": "ec2-54-243-200-159.compute-1.amazonaws.com",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": true
+    }
   }
 }
 

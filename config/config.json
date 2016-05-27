@@ -1,10 +1,5 @@
 {
   "development": {
-//    "username": "postgres",
-//    "password": "admin",
-//    "database": "footy",
-//    "host": "127.0.0.1",
-//    "dialect": "postgres"
     "username": "glmdsggqudxlff",
     "password": "b6yR97eI0nrO8CBI360wVE1w8n",
     "database": "dce69t6ab76e04",
@@ -12,9 +7,9 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+    "username": "postgres",
+    "password": "admin",
+    "database": "footy",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
@@ -26,3 +21,4 @@
     "dialect": "postgres"
   }
 }
+

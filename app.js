@@ -6,7 +6,7 @@ var controllers = require('./controllers/index');
 var models = require("./models");
 var bodyParser = require("body-parser");
 
-var PORT = 3000;
+app.set('port', (process.env.PORT || 3000));
 // var HOST = "localhost";
 var API_DIR = "/api";
 var FORCE_DB_SYNC = false;
@@ -31,8 +31,8 @@ controllers.init(router);
 
 //Start server
 models.sequelize.sync({force:FORCE_DB_SYNC}).then(function () {
-    app.listen(PORT, function () {
-        console.log("server is listening on port: " + PORT);
+    app.listen(app.get('port'), function () {
+        console.log("server is listening on port: " + app.get('port'));
     });
 });
 

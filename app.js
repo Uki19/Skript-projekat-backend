@@ -6,12 +6,13 @@ var controllers = require('./controllers/index');
 var models = require("./models");
 var bodyParser = require("body-parser");
 
-app.set('port', (process.env.PORT || 3000));
 // var HOST = "localhost";
 var API_DIR = "/api";
 var FORCE_DB_SYNC = false;
 
 var app = express();
+
+app.set('port', (process.env.PORT || 3000));
 app.use('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');

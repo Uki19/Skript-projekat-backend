@@ -2,6 +2,10 @@
   "name": "projekat-backend",
   "version": "1.0.0",
   "description": "Project for Script Languages subject",
+  "repository": {
+    "type":"git",
+    "url":"https://github.com/Uki19/Skript-projekat-backend"
+  },
   "main": "app.js",
   "scripts": {
     "start": "node app"

@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 Review.belongsTo(models.Doctor, {as: 'doctor', foreignKey: 'doctorId'});
-                Review.belongsTo(models.User, {as: 'author', foreignKey: 'authorId'})
+                Review.belongsTo(models.User, {as: 'author', foreignKey: 'authorId'});
             }
         }
     });

@@ -9,14 +9,24 @@ var routes = {
 }
 
 function getReviews(req, res, next) {
-    models.Review.findAll()
+    models.Review.findAll({
+            include: [{
+                model: models.User,
+                as: 'author'
+            }]
+        })
         .then(function (reviews) {
             res.json(reviews);
         });
 }
 
 function getReview(req, res, next) {
-    models.Review.findById(req.params.id)
+    models.Review.findById(req.params.id, {
+            include: [{
+                model: models.User,
+                as: 'author'
+            }]
+        })
         .then(function (review) {
             res.json(review);
         })

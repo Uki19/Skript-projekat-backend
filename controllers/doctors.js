@@ -2,7 +2,7 @@
  * Created by Uros Zivaljevic on 5/17/16.
  */
 
-var models = require('../models');
+var models =    require('../models');
 
 var routes = {
     doctors: '/doctors',
@@ -14,7 +14,11 @@ function getDoctors(req, res, next) {
     models.Doctor.findAll({
             include: [{
                 model: models.Review,
-                as: 'reviews'
+                as: 'reviews',
+                include: [{
+                    model: models.User,
+                    as: 'author'
+                }]
             }]
         })
         .then(function (doctors) {
@@ -23,7 +27,16 @@ function getDoctors(req, res, next) {
 }
 
 function getDoctor(req, res, next) {
-    models.Doctor.findById(req.params.id)
+    models.Doctor.findById(req.params.id, {
+            include: [{
+                model: models.Review,
+                as: 'reviews',
+                include: [{
+                    model: models.User,
+                    as: 'author'
+                }]
+            }]
+        })
         .then(function (doctor) {
             res.json(doctor);
         });

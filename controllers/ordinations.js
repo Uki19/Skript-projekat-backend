@@ -23,7 +23,21 @@ function getOrdination(req, res, next) {
         })
 }
 
+function postOrdination(req, res, next) {
+    models.Ordination.create({
+            name: req.body.name,
+            description: req.body.description,
+            email: req.body.email,
+            street: req.body.street,
+            city: req.body.city
+        })
+        .then(function (ordination) {
+            res.json(ordination);
+        });
+}
+
 module.exports.init = function (router) {
     router.get(routes.ordinations, getOrdinations);
     router.get(routes.ordination, getOrdination);
+    router.post(routes.ordinations, postOrdination);
 }

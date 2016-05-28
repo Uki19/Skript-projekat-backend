@@ -47,7 +47,7 @@ function loginUser(req, res, next) {
     })
         .then(function (user) {
             if(!user){
-                res.status(500).send("this user doesn't exist");
+                res.status(404).send("this user doesn't exist");
             } else {
                 res.json(user);
             }

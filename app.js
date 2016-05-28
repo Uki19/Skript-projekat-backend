@@ -7,7 +7,7 @@ var models = require("./models");
 var bodyParser = require("body-parser");
 
 var API_DIR = "/api";
-var FORCE_DB_SYNC = true;
+var FORCE_DB_SYNC = false;
 
 var app = express();
 

@@ -8,7 +8,10 @@ module.exports = function (sequelize, DataTypes) {
         lastname: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING,
-        imageUrl: DataTypes.STRING,
+        imageUrl: {
+            type: DataTypes.STRING,
+            defaultValue: "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
+        },
         city: DataTypes.STRING
     }, {
         classMethods: {

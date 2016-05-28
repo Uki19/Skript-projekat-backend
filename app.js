@@ -12,6 +12,8 @@ var FORCE_DB_SYNC = false;
 
 var app = express();
 
+app.set('port',(process.env.PORT || 3000));
+
 app.use('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -31,8 +33,8 @@ controllers.init(router);
 
 //Start server
 models.sequelize.sync({force:FORCE_DB_SYNC}).then(function () {
-    app.listen(process.env.PORT || 3000, function () {
-        console.log("server is listening on port: ");
+    app.listen(app.get('port'), function () {
+        console.log("server is listening on: " + app.get('port'));
     });
 });
 

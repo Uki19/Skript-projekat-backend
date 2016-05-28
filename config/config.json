@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "glmdsggqudxlff",
-    "password": "b6yR97eI0nrO8CBI360wVE1w8n",
-    "database": "dce69t6ab76e04",
-    "host": "ec2-54-243-200-159.compute-1.amazonaws.com",
+    "username": "postgres",
+    "password": "admin",
+    "database": "footy",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {

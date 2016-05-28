@@ -6,9 +6,8 @@ var controllers = require('./controllers/index');
 var models = require("./models");
 var bodyParser = require("body-parser");
 
-// var HOST = "localhost";
 var API_DIR = "/api";
-var FORCE_DB_SYNC = false;
+var FORCE_DB_SYNC = true;
 
 var app = express();
 

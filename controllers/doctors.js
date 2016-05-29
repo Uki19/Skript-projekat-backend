@@ -67,6 +67,7 @@ function getDoctorReviews(req, res, next) {
 function postDoctorReview(req, res, next) {
     models.Review.create({
             doctorId: req.params.id,
+            authorId: req.body.authorId,
             title: req.body.title,
             comment: req.body.comment,
             stars: req.body.stars

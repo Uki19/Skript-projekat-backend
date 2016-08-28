@@ -2,25 +2,27 @@
  * Created by Uros Zivaljevic on 5/17/16.
  */
 
-var models =    require('../models');
+var models = require('../models');
 
 var routes = {
     doctors: '/doctors',
     doctor: '/doctors/:id',
-    doctorReviews: '/doctors/:id/reviews'
+    doctorReviews: '/doctors/:id/reviews',
+    categories: '/categories'
 }
 
 function getDoctors(req, res, next) {
     models.Doctor.findAll({
-            include: [{
-                model: models.Review,
-                as: 'reviews',
-                include: [{
+        include: [{
+            model: models.Review,
+            as: 'reviews',
+            include: [
+                {
                     model: models.User,
                     as: 'author'
                 }]
-            }]
-        })
+        }]
+    })
         .then(function (doctors) {
             res.json(doctors);
         });
@@ -28,50 +30,81 @@ function getDoctors(req, res, next) {
 
 function getDoctor(req, res, next) {
     models.Doctor.findById(req.params.id, {
+        include: [{
+            model: models.Review,
+            as: 'reviews',
             include: [{
-                model: models.Review,
-                as: 'reviews',
-                include: [{
-                    model: models.User,
-                    as: 'author'
-                }]
+                model: models.User,
+                as: 'author'
             }]
-        })
+        },
+            {
+                model: models.Category,
+                attributes: ['name'],
+                as: 'categories'
+            }]
+    })
         .then(function (doctor) {
             res.json(doctor);
         });
 }
 
 function postDoctor(req, res, next) {
+
     models.Doctor.create({
-            name: req.body.name,
-            description: req.body.description,
-            ordinationId: req.body.ordinationId
-        })
+        name: req.body.name,
+        description: req.body.description,
+        ordinationId: req.body.ordinationId
+    })
         .then(function (doctor) {
-            res.json(doctor);
+            models.User.update({
+                doctorId: doctor.id
+            },{
+                where: {
+                    id: req.body.userId
+                }
+            })
+                .then(function(result){
+                    res.json(doctor);
+                });
         });
 }
 
 function getDoctorReviews(req, res, next) {
     models.Review.findAll({
-            where: {
-                doctorId: req.params.id
-            }
-        })
+        where: {
+            doctorId: req.params.id
+        }
+    })
         .then(function (reviews) {
             res.json(reviews);
         });
 }
 
+
+function getCategories(req, res, next){
+    models.Category.findAll()
+        .then(function (categories) {
+            res.json(categories);
+        })
+}
+
+
 function postDoctorReview(req, res, next) {
     models.Review.create({
-            doctorId: req.params.id,
-            authorId: req.body.authorId,
-            title: req.body.title,
-            comment: req.body.comment,
-            stars: req.body.stars
-        })
+        doctorId: req.params.id,
+        authorId: req.body.authorId,
+        title: req.body.title,
+        comment: req.body.comment,
+        stars: req.body.stars
+    }, {
+        include: [
+            {
+                model: models.User,
+                as: 'author'
+            }
+        ]
+    })
         .then(function (review) {
             res.json(review);
         });
@@ -83,4 +116,5 @@ module.exports.init = function (router) {
     router.get(routes.doctor, getDoctor);
     router.get(routes.doctorReviews, getDoctorReviews);
     router.post(routes.doctorReviews, postDoctorReview);
+    router.get(routes.categories, getCategories);
 }

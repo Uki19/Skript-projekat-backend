@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes){
         timestamps: false,
         classMethods: {
             associate: function(models){
-                Category.belongsToMany(models.Doctor, {through: 'DoctorCategory', foreignKey:'categoryId'});
+                Category.belongsToMany(models.Doctor, {through: 'DoctorCategory', as: 'doctors', foreignKey:'categoryId'});
             }
         }
     });

@@ -6,7 +6,7 @@ var models = require('../models/');
 
 var routes = {
     ordinations: '/ordinations',
-    ordination: '/ordination/:id'
+    ordination: '/ordinations/:id'
 }
 
 function getOrdinations(req, res, next) {
@@ -17,7 +17,14 @@ function getOrdinations(req, res, next) {
 }
 
 function getOrdination(req, res, next) {
-    models.Ordination.findById(req.params.id)
+    models.Ordination.findById(req.params.id, {
+        include: [
+            {
+                model: models.Doctor,
+                as: 'doctors'
+            }
+        ]
+    })
         .then(function (ordination) {
             res.json(ordination);
         })

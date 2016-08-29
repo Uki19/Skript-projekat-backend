@@ -8,7 +8,9 @@ var routes = {
     doctors: '/doctors',
     doctor: '/doctors/:id',
     doctorReviews: '/doctors/:id/reviews',
-    categories: '/categories'
+    categories: '/categories',
+    book: '/book',
+    doctorReservations: '/doctors/:id/reservations'
 }
 
 function getDoctors(req, res, next) {
@@ -40,8 +42,7 @@ function getDoctor(req, res, next) {
         },
             {
                 model: models.Category,
-                attributes: ['name'],
-                as: 'categories'
+                as: 'category'
             }]
     })
         .then(function (doctor) {
@@ -54,7 +55,8 @@ function postDoctor(req, res, next) {
     models.Doctor.create({
         name: req.body.name,
         description: req.body.description,
-        ordinationId: req.body.ordinationId
+        ordinationId: req.body.ordinationId,
+        categoryId: req.body.categoryId
     })
         .then(function (doctor) {
             models.User.update({
@@ -68,6 +70,19 @@ function postDoctor(req, res, next) {
                     res.json(doctor);
                 });
         });
+}
+
+function bookDoctor(req, res, next) {
+
+    models.Reservation.create({
+        hourId: req.body.hourId,
+        userId: req.body.userId,
+        doctorId: req.body.doctorId
+    })
+        .then(function (reservation) {
+            res.json(reservation);
+        });
+
 }
 
 function getDoctorReviews(req, res, next) {
@@ -86,6 +101,17 @@ function getCategories(req, res, next){
     models.Category.findAll()
         .then(function (categories) {
             res.json(categories);
+        })
+}
+
+function getDoctorsReservations(req, res, next) {
+    models.Reservation.findAll({
+        where: {
+            doctorId: req.params.id
+        }
+    })
+        .then(function (reservations) {
+            res.json(reservations);
         })
 }
 
@@ -117,4 +143,6 @@ module.exports.init = function (router) {
     router.get(routes.doctorReviews, getDoctorReviews);
     router.post(routes.doctorReviews, postDoctorReview);
     router.get(routes.categories, getCategories);
+    router.post(routes.book, bookDoctor);
+    router.get(routes.doctorReservations, getDoctorsReservations);
 }

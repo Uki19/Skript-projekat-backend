@@ -14,7 +14,7 @@ module.exports = function (sequelize, DataTypes) {
             associate: function (models) {
                 Doctor.hasMany(models.Review, {as: 'reviews', foreignKey:'doctorId'});
                 Doctor.belongsTo(models.Ordination, {as: 'ordination', foreignKey:'ordinationId'});
-                Doctor.belongsToMany(models.Category, {through: 'DoctorCategory', as: 'categories', foreignKey: 'doctorId'});
+                Doctor.belongsTo(models.Category, {as: 'category', foreignKey: 'categoryId'});
                 Doctor.hasOne(models.User, {as: 'user', foreignKey: 'doctorId'});
             }
         }

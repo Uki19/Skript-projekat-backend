@@ -1,16 +1,17 @@
 /**
- * Created by Uros Zivaljevic on 5/18/16.
+ * Created by Uki on 8/29/16.
  */
 'use strict';
 module.exports = function(sequelize, DataTypes){
-    var Category = sequelize.define('Category',{
-        name: DataTypes.STRING
+    var Hour = sequelize.define('Hour',{
+        time: DataTypes.STRING
     },{
         timestamps: false,
         classMethods: {
             associate: function(models){
+
             }
         }
     });
-    return Category;
+    return Hour;
 }

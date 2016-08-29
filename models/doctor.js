@@ -15,7 +15,6 @@ module.exports = function (sequelize, DataTypes) {
                 Doctor.hasMany(models.Review, {as: 'reviews', foreignKey:'doctorId'});
                 Doctor.belongsTo(models.Ordination, {as: 'ordination', foreignKey:'ordinationId'});
                 Doctor.belongsTo(models.Category, {as: 'category', foreignKey: 'categoryId'});
-                Doctor.hasOne(models.User, {as: 'user', foreignKey: 'doctorId'});
             }
         }
     });

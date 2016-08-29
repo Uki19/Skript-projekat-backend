@@ -12,7 +12,7 @@ var storage = multer.diskStorage({
     filename: function (req, file, cb) {
         cb(null, Date.now() + file.originalname);
     }
-})
+});
 
 var upload = multer({ storage: storage });
 
@@ -63,7 +63,11 @@ function getDoctor(req, res, next) {
 }
 
 function postDoctor(req, res, next) {
-    var imgPath = "http://localhost:3000/images/" + req.file.filename;
+
+    var imgPath = "https://www.renown.org/wp-content/themes/renown/assets/images/find-a-doc-default.png";
+    if(req.file) {
+        imgPath = "http://localhost:3000/images/" + req.file.filename;
+    }
     models.Doctor.create({
         name: req.body.name,
         description: req.body.description,

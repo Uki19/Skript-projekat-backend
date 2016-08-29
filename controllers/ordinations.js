@@ -21,7 +21,12 @@ function getOrdination(req, res, next) {
         include: [
             {
                 model: models.Doctor,
-                as: 'doctors'
+                as: 'doctors',
+                include: [{
+                    model: models.Category,
+                    as: 'category'
+                    }
+                ]
             }
         ]
     })

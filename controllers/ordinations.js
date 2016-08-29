@@ -12,7 +12,7 @@ var routes = {
 function getOrdinations(req, res, next) {
     models.Ordination.findAll()
         .then(function (ordinations) {
-            res.json(ordinations);
+            res.status(200).json(ordinations);
         });
 }
 
@@ -26,7 +26,7 @@ function getOrdination(req, res, next) {
         ]
     })
         .then(function (ordination) {
-            res.json(ordination);
+            res.status(200).json(ordination);
         })
 }
 
@@ -39,7 +39,7 @@ function postOrdination(req, res, next) {
             city: req.body.city
         })
         .then(function (ordination) {
-            res.json(ordination);
+            res.status(201).json(ordination);
         });
 }
 

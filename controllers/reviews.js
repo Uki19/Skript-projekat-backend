@@ -16,7 +16,7 @@ function getReviews(req, res, next) {
             }]
         })
         .then(function (reviews) {
-            res.json(reviews);
+            res.status(200).json(reviews);
         });
 }
 
@@ -28,7 +28,7 @@ function getReview(req, res, next) {
             }]
         })
         .then(function (review) {
-            res.json(review);
+            res.status(200).json(review);
         })
 }
 

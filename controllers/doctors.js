@@ -3,6 +3,18 @@
  */
 
 var models = require('../models');
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/images')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + file.originalname);
+    }
+})
+
+var upload = multer({ storage: storage });
 
 var routes = {
     doctors: '/doctors',
@@ -26,7 +38,7 @@ function getDoctors(req, res, next) {
         }]
     })
         .then(function (doctors) {
-            res.json(doctors);
+            res.status(200).json(doctors);
         });
 }
 
@@ -46,17 +58,18 @@ function getDoctor(req, res, next) {
             }]
     })
         .then(function (doctor) {
-            res.json(doctor);
+            res.status(200).json(doctor);
         });
 }
 
 function postDoctor(req, res, next) {
-
+    var imgPath = "http://localhost:3000/images/" + req.file.filename;
     models.Doctor.create({
         name: req.body.name,
         description: req.body.description,
         ordinationId: req.body.ordinationId,
-        categoryId: req.body.categoryId
+        categoryId: req.body.categoryId,
+        imageUrl: imgPath
     })
         .then(function (doctor) {
             models.User.update({
@@ -67,7 +80,7 @@ function postDoctor(req, res, next) {
                 }
             })
                 .then(function(result){
-                    res.json(doctor);
+                    res.status(201).json(doctor);
                 });
         });
 }
@@ -75,12 +88,12 @@ function postDoctor(req, res, next) {
 function bookDoctor(req, res, next) {
 
     models.Reservation.create({
-        hourId: req.body.hourId,
+        date: req.body.date,
         userId: req.body.userId,
         doctorId: req.body.doctorId
     })
         .then(function (reservation) {
-            res.json(reservation);
+            res.status(201).json(reservation);
         });
 
 }
@@ -92,7 +105,7 @@ function getDoctorReviews(req, res, next) {
         }
     })
         .then(function (reviews) {
-            res.json(reviews);
+            res.status(200).json(reviews);
         });
 }
 
@@ -100,7 +113,7 @@ function getDoctorReviews(req, res, next) {
 function getCategories(req, res, next){
     models.Category.findAll()
         .then(function (categories) {
-            res.json(categories);
+            res.status(200).json(categories);
         })
 }
 
@@ -111,7 +124,7 @@ function getDoctorsReservations(req, res, next) {
         }
     })
         .then(function (reservations) {
-            res.json(reservations);
+            res.status(200).json(reservations);
         })
 }
 
@@ -132,13 +145,13 @@ function postDoctorReview(req, res, next) {
         ]
     })
         .then(function (review) {
-            res.json(review);
+            res.status(201).json(review);
         });
 }
 
 module.exports.init = function (router) {
     router.get(routes.doctors, getDoctors);
-    router.post(routes.doctors, postDoctor);
+    router.post(routes.doctors, upload.single('file'), postDoctor);
     router.get(routes.doctor, getDoctor);
     router.get(routes.doctorReviews, getDoctorReviews);
     router.post(routes.doctorReviews, postDoctorReview);

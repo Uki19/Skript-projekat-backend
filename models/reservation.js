@@ -4,13 +4,12 @@
 'use strict';
 module.exports = function(sequelize, DataTypes){
     var Reservation = sequelize.define('Reservation',{
+        date: DataTypes.STRING
     },{
-        timestamps: false,
         classMethods: {
             associate: function(models){
                 Reservation.belongsTo(models.Doctor, {as: 'doctor', foreignKey: 'doctorId'});
                 Reservation.belongsTo(models.User, {as: 'user', foreignKey: 'userId'});
-                Reservation.belongsTo(models.Hour, {as: 'hour', foreignKey: 'hourId'});
             }
         }
     });

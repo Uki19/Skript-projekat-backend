@@ -31,7 +31,7 @@ function registerUser(req, res, next) {
                         city: req.body.city
                     })
                     .then(function (user) {
-                        res.json(user);
+                        res.status(201).json(user);
                     });
             }
         })
@@ -49,7 +49,7 @@ function loginUser(req, res, next) {
             if(!user){
                 res.status(404).send("this user doesn't exist");
             } else {
-                res.json(user);
+                res.status(200).json(user);
             }
         })
 }

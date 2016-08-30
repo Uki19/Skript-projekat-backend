@@ -31,7 +31,6 @@ function registerUser(req, res, next) {
     if (req.file) {
         imgPath = "http://localhost:3000/images/" + req.file.filename;
     }
-    console.log(imgPath);
     models.User.findOne({
         where: {
             email: req.body.email
@@ -39,7 +38,8 @@ function registerUser(req, res, next) {
     })
         .then(function (user) {
             if (user) {
-                res.status(500).send("exists");
+                res.status(403).send("exists");
+                return;
             } else {
                 models.User.create({
                     firstname: req.body.firstname,

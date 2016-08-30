@@ -14,7 +14,7 @@ var storage = multer.diskStorage({
     }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({storage: storage});
 
 var routes = {
     doctors: '/doctors',
@@ -62,18 +62,23 @@ function getLatestDoctors(req, res, next) {
 
 function getDoctorsByCategory(req, res, next) {
     models.Doctor.findAll({
-        where:{
+        where: {
             categoryId: req.params.categoryId
         },
-        include: [{
-            model: models.Review,
-            as: 'reviews',
-            include: [
-                {
-                    model: models.User,
-                    as: 'author'
-                }]
-        }]
+        include: [
+            {
+                model: models.Category,
+                as: 'category'
+            },
+            {
+                model: models.Review,
+                as: 'reviews',
+                include: [
+                    {
+                        model: models.User,
+                        as: 'author'
+                    }]
+            }]
     })
         .then(function (doctors) {
             res.status(200).json(doctors);
@@ -103,7 +108,7 @@ function getDoctor(req, res, next) {
 function postDoctor(req, res, next) {
 
     var imgPath = "https://www.renown.org/wp-content/themes/renown/assets/images/find-a-doc-default.png";
-    if(req.file) {
+    if (req.file) {
         imgPath = "http://localhost:3000/images/" + req.file.filename;
     }
     models.Doctor.create({
@@ -116,12 +121,12 @@ function postDoctor(req, res, next) {
         .then(function (doctor) {
             models.User.update({
                 doctorId: doctor.id
-            },{
+            }, {
                 where: {
                     id: req.body.userId
                 }
             })
-                .then(function(result){
+                .then(function (result) {
                     res.status(201).json(doctor);
                 });
         });
@@ -152,7 +157,7 @@ function getDoctorReviews(req, res, next) {
 }
 
 
-function getCategories(req, res, next){
+function getCategories(req, res, next) {
     models.Category.findAll()
         .then(function (categories) {
             res.status(200).json(categories);

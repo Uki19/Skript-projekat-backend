@@ -81,7 +81,38 @@ function getUser(req, res, next) {
         include: [
             {
                 model: models.Doctor,
-                as: 'doctor'
+                as: 'doctor',
+                include: [
+                    {
+                        model: models.Category,
+                        as: 'category'
+                    },
+                    {
+                        model: models.Article,
+                        as: 'articles'
+                    }]
+            },
+            {
+                model: models.Reservation,
+                as: 'reservations',
+                include: [
+                    {
+                        model: models.Doctor,
+                        as: 'doctor'
+                    }
+                ]
+
+            },
+            {
+                model: models.Review,
+                as: 'reviews',
+                include: [
+                    {
+                        model: models.Doctor,
+                        as: 'doctor'
+                    }
+                ]
+
             }
         ]
     })

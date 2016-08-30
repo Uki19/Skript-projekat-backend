@@ -6,11 +6,37 @@ var models = require('../models/');
 
 var routes = {
     ordinations: '/ordinations',
-    ordination: '/ordinations/:id'
+    ordination: '/ordinations/:id',
+    ordinationsLatest: '/latestOrdinations'
+};
+
+function getLatestOrdinations(req, res, next) {
+    models.Ordination.findAll({
+        include: [
+            {
+                model: models.OrdinationImage,
+                as: 'images'
+            }
+        ],
+        limit: 4,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    })
+        .then(function (ordinations) {
+            res.status(200).json(ordinations);
+        });
 }
 
 function getOrdinations(req, res, next) {
-    models.Ordination.findAll()
+    models.Ordination.findAll({
+        include: [
+            {
+                model: models.OrdinationImage,
+                as: 'images'
+            }
+        ]
+    })
         .then(function (ordinations) {
             res.status(200).json(ordinations);
         });
@@ -27,6 +53,10 @@ function getOrdination(req, res, next) {
                     as: 'category'
                     }
                 ]
+            },
+            {
+                model: models.OrdinationImage,
+                as: 'images'
             }
         ]
     })
@@ -51,5 +81,6 @@ function postOrdination(req, res, next) {
 module.exports.init = function (router) {
     router.get(routes.ordinations, getOrdinations);
     router.get(routes.ordination, getOrdination);
+    router.get(routes.ordinationsLatest, getLatestOrdinations);
     router.post(routes.ordinations, postOrdination);
-}
+};

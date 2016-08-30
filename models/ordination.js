@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes){
         classMethods: {
             associate: function(models){
                 Ordiantion.hasMany(models.Doctor, {as: 'doctors', foreignKey:'ordinationId'});
+                Ordiantion.hasMany(models.OrdinationImage, {as: 'images', foreignKey:'ordinationId'});
             }
         }
     });

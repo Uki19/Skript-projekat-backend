@@ -18,15 +18,53 @@ var upload = multer({ storage: storage });
 
 var routes = {
     doctors: '/doctors',
+    doctorsLatest: '/latestDoctors',
     doctor: '/doctors/:id',
     doctorReviews: '/doctors/:id/reviews',
     categories: '/categories',
     book: '/book',
-    doctorReservations: '/doctors/:id/reservations'
-}
+    doctorReservations: '/doctors/:id/reservations',
+    doctorsByCategory: '/doctors/categories/:categoryId'
+};
 
 function getDoctors(req, res, next) {
     models.Doctor.findAll({
+        include: [{
+            model: models.Review,
+            as: 'reviews',
+            include: [
+                {
+                    model: models.User,
+                    as: 'author'
+                }]
+        }]
+    })
+        .then(function (doctors) {
+            res.status(200).json(doctors);
+        });
+}
+
+function getLatestDoctors(req, res, next) {
+    models.Doctor.findAll({
+        include: [{
+            model: models.Category,
+            as: 'category'
+        }],
+        limit: 4,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    })
+        .then(function (doctors) {
+            res.status(200).json(doctors);
+        });
+}
+
+function getDoctorsByCategory(req, res, next) {
+    models.Doctor.findAll({
+        where:{
+            categoryId: req.params.categoryId
+        },
         include: [{
             model: models.Review,
             as: 'reviews',
@@ -162,4 +200,6 @@ module.exports.init = function (router) {
     router.get(routes.categories, getCategories);
     router.post(routes.book, bookDoctor);
     router.get(routes.doctorReservations, getDoctorsReservations);
+    router.get(routes.doctorsByCategory, getDoctorsByCategory);
+    router.get(routes.doctorsLatest, getLatestDoctors);
 }

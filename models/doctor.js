@@ -13,6 +13,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 Doctor.hasMany(models.Review, {as: 'reviews', foreignKey:'doctorId'});
+                Doctor.hasMany(models.Article, {as: 'articles', foreignKey:'doctorId'});
                 Doctor.belongsTo(models.Ordination, {as: 'ordination', foreignKey:'ordinationId'});
                 Doctor.belongsTo(models.Category, {as: 'category', foreignKey: 'categoryId'});
             }
